@@ -1,1 +1,38 @@
+version: '3'
 
+# service desciption
+services:
+
+  # draw.io server
+  drawio-server:
+    image: jgraph/drawio
+    container_name: drawio-server
+    hostname: drawio-server
+    restart: unless-stopped
+    networks:
+      - traefik-net
+    labels:
+      # enable traefik
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-net"
+      # http endpoint
+      - "traefik.http.routers.drawio-web.entrypoints=web"
+      - "traefik.http.routers.drawio-web.rule=HostHeader(`${DRAWIO_CONT_URL}`)"
+      - "traefik.http.routers.drawio-web.middlewares=drawio-websecure-redir"
+      # https endpoint
+      - "traefik.http.routers.drawio-websecure.entrypoints=websecure"
+      - "traefik.http.routers.drawio-websecure.rule=HostHeader(`${DRAWIO_CONT_URL}`)"
+      - "traefik.http.routers.drawio-websecure.tls=true"
+      - "traefik.http.routers.drawio-websecure.tls.certresolver=lets-encrypt"
+      - "traefik.http.routers.drawio-websecure.service=drawio-service"
+      # middlewares
+      - "traefik.http.middlewares.drawio-websecure-redir.redirectscheme.scheme=https"
+      # services
+      - "traefik.http.services.drawio-service.loadbalancer.server.port=8080"
+
+# networks to use
+networks:
+
+  # traefik reverse proxy network
+  traefik-net:
+    external: true
