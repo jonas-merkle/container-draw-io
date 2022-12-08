@@ -4,10 +4,10 @@ version: '3'
 services:
 
   # draw.io server
-  drawio-server:
+  draw-io-server:
     image: jgraph/drawio
-    container_name: drawio-server
-    hostname: drawio-server
+    container_name: draw-io-server
+    hostname: draw-io-server
     restart: unless-stopped
     networks:
       - traefik-net
@@ -16,19 +16,19 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
       # http endpoint
-      - "traefik.http.routers.drawio-web.entrypoints=web"
-      - "traefik.http.routers.drawio-web.rule=HostHeader(`${DRAWIO_CONT_URL}`)"
-      - "traefik.http.routers.drawio-web.middlewares=drawio-websecure-redir"
+      - "traefik.http.routers.draw-io-web.entrypoints=web"
+      - "traefik.http.routers.draw-io-web.rule=Host(`${DRAW_IO_CONT_URL}`)"
+      - "traefik.http.routers.draw-io-web.middlewares=draw-io-websecure-redir"
       # https endpoint
-      - "traefik.http.routers.drawio-websecure.entrypoints=websecure"
-      - "traefik.http.routers.drawio-websecure.rule=HostHeader(`${DRAWIO_CONT_URL}`)"
-      - "traefik.http.routers.drawio-websecure.tls=true"
-      - "traefik.http.routers.drawio-websecure.tls.certresolver=lets-encrypt"
-      - "traefik.http.routers.drawio-websecure.service=drawio-service"
+      - "traefik.http.routers.draw-io-websecure.entrypoints=websecure"
+      - "traefik.http.routers.draw-io-websecure.rule=Host(`${DRAW_IO_CONT_URL}`)"
+      - "traefik.http.routers.draw-io-websecure.tls=true"
+      - "traefik.http.routers.draw-io-websecure.tls.certresolver=lets-encrypt"
+      - "traefik.http.routers.draw-io-websecure.service=draw-io-service"
       # middlewares
-      - "traefik.http.middlewares.drawio-websecure-redir.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.draw-io-websecure-redir.redirectscheme.scheme=https"
       # services
-      - "traefik.http.services.drawio-service.loadbalancer.server.port=8080"
+      - "traefik.http.services.draw-io-service.loadbalancer.server.port=8080"
 
 # networks to use
 networks:
