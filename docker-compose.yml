@@ -15,18 +15,12 @@ services:
       # enable traefik
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
-      # http endpoint
-      - "traefik.http.routers.draw-io-web.entrypoints=web"
-      - "traefik.http.routers.draw-io-web.rule=Host(`${DRAW_IO_CONT_URL}`)"
-      - "traefik.http.routers.draw-io-web.middlewares=draw-io-websecure-redir"
       # https endpoint
       - "traefik.http.routers.draw-io-websecure.entrypoints=websecure"
       - "traefik.http.routers.draw-io-websecure.rule=Host(`${DRAW_IO_CONT_URL}`)"
       - "traefik.http.routers.draw-io-websecure.tls=true"
       - "traefik.http.routers.draw-io-websecure.tls.certresolver=lets-encrypt"
       - "traefik.http.routers.draw-io-websecure.service=draw-io-service"
-      # middlewares
-      - "traefik.http.middlewares.draw-io-websecure-redir.redirectscheme.scheme=https"
       # services
       - "traefik.http.services.draw-io-service.loadbalancer.server.port=8080"
 
