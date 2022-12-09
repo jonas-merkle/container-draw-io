@@ -12,6 +12,8 @@ services:
     networks:
       - traefik-net
     labels:
+      # enbale watchtower updates
+      - "com.centurylinklabs.watchtower.enable=true"
       # enable traefik
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-net"
