@@ -1,6 +1,6 @@
 # container-draw-io
 
-A Docker Compose container setup for [draw.io](https://github.com/jgraph/drawio)
+A Docker Compose container setup for [Draw.io](https://github.com/jgraph/drawio)
 
 ## Table of contents
 
