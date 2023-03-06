@@ -23,6 +23,12 @@ A Docker Compose container setup for [Draw.io](https://github.com/jgraph/drawio)
     ```bash
     nano .env
     ```
+    
+    Mark the `.env` file so it's not tracked by git:
+
+    ```bash
+    git update-index --assume-unchanged .env
+    ```
 
 2. Start container
 
